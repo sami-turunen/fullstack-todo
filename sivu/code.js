@@ -1,3 +1,5 @@
+const rootApi = "https://fullstack-todoo.onrender.com";
+
 function init() {
   let infoText = document.getElementById("infoText");
   infoText.innerHTML = "Ladataan tehtävälista palvelimelta...";
@@ -5,7 +7,7 @@ function init() {
 }
 
 async function loadTodos() {
-  let response = await fetch("http://localhost:3000/todos");
+  let response = await fetch(rootApi + "/todos");
   let todos = await response.json();
   console.log(todos);
   showTodos(todos);
@@ -63,7 +65,7 @@ async function addTodo() {
     return;
   }
   const data = { text: newTodo.value };
-  const response = await fetch("http://localhost:3000/todos", {
+  const response = await fetch(rootApi + "/todos", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -80,7 +82,7 @@ async function addTodo() {
 }
 
 async function removeTodo(id) {
-  const response = await fetch(`http://localhost:3000/todos/${id}`, {
+  const response = await fetch(`${rootApi}/todos/${id}`, {
     method: "DELETE",
   });
 
@@ -117,7 +119,7 @@ async function updateTodo(id) {
     return;
   }
   const data = { text: newTodo.value };
-  let url = "http://localhost:3000/todos/" + id;
+  let url = rootApi + "/todos/" + id;
   const response = await fetch(url, {
     method: "PUT",
     headers: {

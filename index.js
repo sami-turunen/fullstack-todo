@@ -2,9 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const path = require("path");
 dotenv.config();
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -52,6 +53,12 @@ app.delete("/todos/:id", async (req, res) => {
   const deletedTodo = await Todo.findByIdAndDelete(req.params.id);
   if (deletedTodo) res.json(deletedTodo);
   else res.status(404).end();
+});
+
+app.use(express.static(path.join(__dirname, "sivu")));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "sivu", "index.html"));
 });
 
 app.listen(port || 3000, () => {
